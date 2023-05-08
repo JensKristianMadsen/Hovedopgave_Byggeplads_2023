@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Employee;
 use Illuminate\Http\Request;
 
 class EmployeeController extends Controller
@@ -13,7 +14,7 @@ class EmployeeController extends Controller
      */
     public function index()
     {
-        //
+        return Employee::all();
     }
 
     /**
@@ -34,7 +35,20 @@ class EmployeeController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        try {
+            $validated = $request->validate([
+                'name' => 'required',
+                'is_available' => 'required|boolean',
+
+            ]);
+            $employee = Employee::create($validated);
+
+            return response()->json($employee, 201);
+        } catch (\Illuminate\Validation\ValidationException $exception) {
+            return response()->json([
+                'errors' => $exception->errors()
+            ], 422);
+        }
     }
 
     /**
