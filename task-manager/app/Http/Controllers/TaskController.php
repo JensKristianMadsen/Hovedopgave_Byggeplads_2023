@@ -35,17 +35,24 @@ class TaskController extends Controller
      */
     public function store(Request $request)
     {
-        $validated = $request->validate([
-            'description' => 'required',
-            'tool_id' => 'required|exists:tools,id',
-            'employee_id' => 'required|exists:employees,id',
-            'is_completed' => 'required|boolean',
 
-        ]);
+        try {
+            $validated = $request->validate([
+                'description' => 'required',
+                'tool_id' => 'required|exists:tools,id',
+                'employee_id' => 'required|exists:employees,id',
+                'is_completed' => 'required|boolean',
 
-        $task = Task::create($validated);
+            ]);
 
-        return response()->json($task, 201);
+            $task = Task::create($validated);
+
+            return response()->json($task, 201);
+        } catch (\Illuminate\Validation\ValidationException $exception) {
+            return response()->json([
+                'errors' => $exception->errors()
+            ], 422);
+        }
     }
 
     /**
@@ -79,17 +86,23 @@ class TaskController extends Controller
      */
     public function update(Request $request, Task $task)
     {
-        $validated = $request->validate([
-            'description' => 'required',
-            'tool_id' => 'required|exists:tools,id',
-            'employee_id' => 'required|exists:employees,id',
-            'is_completed' => 'required|boolean',
+        try {
+            $validated = $request->validate([
+                'description' => 'required',
+                'tool_id' => 'required|exists:tools,id',
+                'employee_id' => 'required|exists:employees,id',
+                'is_completed' => 'required|boolean',
 
-        ]);
+            ]);
 
-        $task->update($validated);
+            $task->update($validated);
 
-        return response()->json($task, 200);
+            return response()->json($task, 200);
+        } catch (\Illuminate\Validation\ValidationException $exception) {
+            return response()->json([
+                'errors' => $exception->errors()
+            ], 422);
+        }
     }
 
     /**

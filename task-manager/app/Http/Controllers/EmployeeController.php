@@ -82,15 +82,22 @@ class EmployeeController extends Controller
      */
     public function update(Request $request, Employee $employee)
     {
-        $validated = $request->validate([
-            'name' => 'required',
-            'is_available' => 'required|boolean',
+        try {
 
-        ]);
+            $validated = $request->validate([
+                'name' => 'required',
+                'is_available' => 'required|boolean',
 
-        $employee->update($validated);
+            ]);
 
-        return response()->json($employee, 200);
+            $employee->update($validated);
+
+            return response()->json($employee, 200);
+        } catch (\Illuminate\Validation\ValidationException $exception) {
+            return response()->json([
+                'errors' => $exception->errors()
+            ], 422);
+        }
     }
 
     /**

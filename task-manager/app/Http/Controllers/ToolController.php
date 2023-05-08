@@ -14,6 +14,7 @@ class ToolController extends Controller
      */
     public function index()
     {
+
         return Tool::all();
     }
 
@@ -82,15 +83,21 @@ class ToolController extends Controller
      */
     public function update(Request $request, Tool $tool)
     {
-        $validated = $request->validate([
-            'item' => 'required',
-            'is_available' => 'required|boolean',
+        try {
+            $validated = $request->validate([
+                'item' => 'required',
+                'is_available' => 'required|boolean',
 
-        ]);
+            ]);
 
-        $tool->update($validated);
+            $tool->update($validated);
 
-        return response()->json($tool, 200);
+            return response()->json($tool, 200);
+        } catch (\Illuminate\Validation\ValidationException $exception) {
+            return response()->json([
+                'errors' => $exception->errors()
+            ], 422);
+        }
     }
 
     /**
