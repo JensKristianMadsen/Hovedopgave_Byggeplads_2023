@@ -35,7 +35,19 @@ class TaskController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validated = $request->validate([
+            'description' => 'required',
+            'tool_id' => 'required|exists:tools,id',
+            'employee_id' => 'required|exists:employees,id',
+            'is_completed' => 'required|boolean',
+
+        ]);
+
+        $task = Task::create($validated);
+
+        error_log('Task created: ' . print_r($task->toArray(), true));
+
+        return response()->json($task, 201);
     }
 
     /**
