@@ -57,9 +57,9 @@ class EmployeeController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Employee $employee)
     {
-        //
+        return $employee;
     }
 
     /**
@@ -80,9 +80,17 @@ class EmployeeController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Employee $employee)
     {
-        //
+        $validated = $request->validate([
+            'name' => 'required',
+            'is_available' => 'required|boolean',
+
+        ]);
+
+        $employee->update($validated);
+
+        return response()->json($employee, 200);
     }
 
     /**
