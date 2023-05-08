@@ -45,8 +45,6 @@ class TaskController extends Controller
 
         $task = Task::create($validated);
 
-        error_log('Task created: ' . print_r($task->toArray(), true));
-
         return response()->json($task, 201);
     }
 
@@ -56,9 +54,9 @@ class TaskController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Task $task)
     {
-        //
+        return $task;
     }
 
     /**
@@ -79,9 +77,19 @@ class TaskController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Task $task)
     {
-        //
+        $validated = $request->validate([
+            'description' => 'required',
+            'tool_id' => 'required|exists:tools,id',
+            'employee_id' => 'required|exists:employees,id',
+            'is_completed' => 'required|boolean',
+
+        ]);
+
+        $task->update($validated);
+
+        return response()->json($task, 200);
     }
 
     /**
