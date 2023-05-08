@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Tool;
 use Illuminate\Http\Request;
 
 class ToolController extends Controller
@@ -13,7 +14,7 @@ class ToolController extends Controller
      */
     public function index()
     {
-        //
+        return Tool::all();
     }
 
     /**
@@ -34,7 +35,20 @@ class ToolController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        try {
+            $validated = $request->validate([
+                'item' => 'required',
+                'is_available' => 'required|boolean',
+
+            ]);
+            $tool = Tool::create($validated);
+
+            return response()->json($tool, 201);
+        } catch (\Illuminate\Validation\ValidationException $exception) {
+            return response()->json([
+                'errors' => $exception->errors()
+            ], 422);
+        }
     }
 
     /**
@@ -43,9 +57,9 @@ class ToolController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Tool $tool)
     {
-        //
+        return $tool;
     }
 
     /**
@@ -66,9 +80,17 @@ class ToolController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Tool $tool)
     {
-        //
+        $validated = $request->validate([
+            'item' => 'required',
+            'is_available' => 'required|boolean',
+
+        ]);
+
+        $tool->update($validated);
+
+        return response()->json($tool, 200);
     }
 
     /**
@@ -77,8 +99,9 @@ class ToolController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Tool $tool)
     {
-        //
+        $tool->delete();
+        return response()->json(null, 204);
     }
 }
