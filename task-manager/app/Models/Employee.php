@@ -8,6 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 class Employee extends Model
 {
     use HasFactory;
+    protected $fillable = ['name', 'is_available'];
+
     public function tasks()
     {
         return $this->hasMany(Task::class);

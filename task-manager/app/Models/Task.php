@@ -8,6 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 class Task extends Model
 {
     use HasFactory;
+
+    protected $fillable = ['description', 'tool_id', 'employee_id', 'is_completed'];
+
     public function tool()
     {
         return $this->belongsTo(Tool::class);
