@@ -1,12 +1,16 @@
 <template>
     <div>
-        <h1>Hello, Laravel Vue.js 3 & Bootstrap!</h1>
+  <TaskList />
     </div>
 </template>
 
 <script>
+import TaskList from './TaskList.vue';
 export default {
     name: 'App',
+    components: {
+        TaskList
+    }
 };
 </script>
 
