@@ -10,7 +10,7 @@
     </tr>
   </thead>
   <tbody>
-    <tr v-for="task in tasks" :key="task.id">
+    <tr v-for="task in tasks" :key="task.id" >
                     <td>{{ task.is_completed }}</td>
                     <td>{{ task.description }}</td>
                     <td>{{ task.tool_id }}</td>
@@ -20,31 +20,10 @@
 
   </tbody>
 
-
-  
 </table>
-    <div>
-        <table>
-            <thead>
-                <tr>
-                    <th>Description</th>
-                    <th>Tool</th>
-                    <th>Employee</th>
-                    <th>Completed</th>
-               
-                </tr>
-            </thead>
-            <tbody>
-                <tr v-for="task in tasks" :key="task.id">
-                    <td>{{ task.description }}</td>
-                    <td>{{ task.tool_id }}</td>
-                    <td>{{  task.employee_id }}</td>
-                    <td>{{ task.is_completed }}</td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-      
+
+
+
     </template>
     
     <script>
@@ -68,5 +47,5 @@
     </script>
     
     <style>
-    
+
     </style>
