@@ -88,11 +88,10 @@ class TaskController extends Controller
     {
         try {
             $validated = $request->validate([
-                'description' => 'required',
-                'tool_id' => 'required|exists:tools,id',
-                'employee_id' => 'required|exists:employees,id',
-                'is_completed' => 'required|boolean',
-
+                'description' => 'sometimes|required',
+                'tool_id' => 'sometimes|required|exists:tools,id',
+                'employee_id' => 'sometimes|required|exists:employees,id',
+                'is_completed' => 'sometimes|required|boolean',
             ]);
 
             $task->update($validated);
