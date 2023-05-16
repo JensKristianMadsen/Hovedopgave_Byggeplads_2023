@@ -15369,6 +15369,42 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           }
         }, _callee2, null, [[0, 5]]);
       }))();
+    },
+    deleteTask: function deleteTask(task) {
+      var _this2 = this;
+      return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee3() {
+        var taskIndex;
+        return _regeneratorRuntime().wrap(function _callee3$(_context3) {
+          while (1) switch (_context3.prev = _context3.next) {
+            case 0:
+              if (confirm("Confirm to delete task ".concat(task.description, "?"))) {
+                _context3.next = 2;
+                break;
+              }
+              return _context3.abrupt("return");
+            case 2:
+              _context3.prev = 2;
+              _context3.next = 5;
+              return axios__WEBPACK_IMPORTED_MODULE_0___default()["delete"]("http://localhost:8000/api/tasks/".concat(task.id));
+            case 5:
+              taskIndex = _this2.tasks.indexOf(task);
+              if (taskIndex > -1) {
+                _this2.tasks = _this2.tasks.filter(function (t) {
+                  return t.id !== task.id;
+                });
+              }
+              _context3.next = 12;
+              break;
+            case 9:
+              _context3.prev = 9;
+              _context3.t0 = _context3["catch"](2);
+              console.error("error from delete task.id", _context3.t0);
+            case 12:
+            case "end":
+              return _context3.stop();
+          }
+        }, _callee3, null, [[2, 9]]);
+      }))();
     }
   }
 });
@@ -15421,6 +15457,7 @@ var _hoisted_2 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementV
   scope: "col"
 }, "Employee")])], -1 /* HOISTED */);
 var _hoisted_3 = ["onUpdate:modelValue", "onChange"];
+var _hoisted_4 = ["onClick"];
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("table", _hoisted_1, [_hoisted_2, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("tbody", null, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($data.tasks, function (task) {
     return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("tr", {
@@ -15436,7 +15473,11 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       onChange: function onChange($event) {
         return $options.taskCompletionCheck(task);
       }
-    }, null, 40 /* PROPS, HYDRATE_EVENTS */, _hoisted_3), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelCheckbox, task.is_completed]])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(task.description), 1 /* TEXT */), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(task.tool_id), 1 /* TEXT */), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(task.employee_id), 1 /* TEXT */)], 2 /* CLASS */);
+    }, null, 40 /* PROPS, HYDRATE_EVENTS */, _hoisted_3), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelCheckbox, task.is_completed]])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(task.description), 1 /* TEXT */), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(task.tool_id), 1 /* TEXT */), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(task.employee_id), 1 /* TEXT */), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
+      onClick: function onClick($event) {
+        return $options.deleteTask(task);
+      }
+    }, "Delete", 8 /* PROPS */, _hoisted_4)])], 2 /* CLASS */);
   }), 128 /* KEYED_FRAGMENT */))])]);
 }
 
