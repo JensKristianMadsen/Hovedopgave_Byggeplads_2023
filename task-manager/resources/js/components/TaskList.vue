@@ -16,7 +16,10 @@
                     <td>{{ task.description }}</td>
                     <td>{{ task.tool_id }}</td>
                     <td>{{  task.employee_id }}</td>
-                  
+          
+                    <td>
+  <button @click="deleteTask(task)">Delete</button>
+</td>
                 </tr>
 
   </tbody>
@@ -53,7 +56,25 @@
             console.error(error);
             task.is_completed = !task.is_completed;
           }
-        }
+        },
+async deleteTask(task) {
+ if (!confirm(`Confirm to delete task ${task.description}?`)) {
+return;
+ }
+  
+  try {
+await axios.delete(`http://localhost:8000/api/tasks/${task.id}`)
+
+const taskIndex = this.tasks.indexOf(task);
+
+    if (taskIndex > -1){
+      this.tasks = this.tasks.filter(t => t.id !== task.id);
+    }
+  } catch (error) {
+    console.error("error from delete task.id", error);
+  }
+}
+
       }
     
     }
