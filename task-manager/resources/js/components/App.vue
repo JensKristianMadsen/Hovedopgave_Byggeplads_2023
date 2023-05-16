@@ -1,16 +1,21 @@
 <template>
     <div>
+        <Task />
+    </div>
+    <div>
   <TaskList />
     </div>
 </template>
 
 <script>
 import TaskList from './TaskList.vue';
+import Task from './Task.vue';
 import axios from 'axios';
 export default {
     name: 'App',
     components: {
-        TaskList
+        TaskList,
+        Task
     },
       data() {
         return {
