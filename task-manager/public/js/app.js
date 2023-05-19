@@ -15318,13 +15318,16 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           case 3:
             res = _context.sent;
             _this.tasks = res.data;
-            _context.next = 10;
+            _context.next = 11;
             break;
           case 7:
             _context.prev = 7;
             _context.t0 = _context["catch"](0);
-            console.error(_context.t0);
-          case 10:
+            console.error(_context.t0.message);
+            if (_context.t0.res) {
+              console.error('Response data:', _context.t0.res.data);
+            }
+          case 11:
           case "end":
             return _context.stop();
         }
@@ -15358,15 +15361,18 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     return {
       task: {
         description: '',
-        tool_id: ''
+        tool_id: '',
+        employee_id: '',
+        is_completed: false
       },
-      tools: []
+      tools: [],
+      employees: []
     };
   },
   mounted: function mounted() {
     var _this = this;
     return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee() {
-      var res;
+      var resTools, resEmployees;
       return _regeneratorRuntime().wrap(function _callee$(_context) {
         while (1) switch (_context.prev = _context.next) {
           case 0:
@@ -15374,19 +15380,27 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
             _context.next = 3;
             return axios__WEBPACK_IMPORTED_MODULE_0___default().get('http://localhost:8000/api/tools');
           case 3:
-            res = _context.sent;
-            _this.tools = res.data;
-            _context.next = 10;
+            resTools = _context.sent;
+            _context.next = 6;
+            return axios__WEBPACK_IMPORTED_MODULE_0___default().get('http://localhost:8000/api/employees');
+          case 6:
+            resEmployees = _context.sent;
+            _this.tools = resTools.data;
+            _this.employees = resEmployees.data;
+            _context.next = 15;
             break;
-          case 7:
-            _context.prev = 7;
+          case 11:
+            _context.prev = 11;
             _context.t0 = _context["catch"](0);
-            console.error(_context.t0);
-          case 10:
+            console.error(_context.t0.message);
+            if (_context.t0.res) {
+              console.error('Response data:', _context.t0.res.data);
+            }
+          case 15:
           case "end":
             return _context.stop();
         }
-      }, _callee, null, [[0, 7]]);
+      }, _callee, null, [[0, 11]]);
     }))();
   },
   methods: {
@@ -15398,11 +15412,11 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           while (1) switch (_context2.prev = _context2.next) {
             case 0:
               e.preventDefault();
-              if (_this2.task.description) {
+              if (!(!_this2.task.description || !_this2.task.tool_id || !_this2.task.employee_id)) {
                 _context2.next = 4;
                 break;
               }
-              alert('Task description is required');
+              alert('Task description, tool, and employee are required fill out');
               return _context2.abrupt("return");
             case 4:
               _context2.prev = 4;
@@ -15415,19 +15429,28 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
               }
               _this2.task = {
                 description: '',
-                tool_id: ''
+                tool: '',
+                employee: '',
+                is_completed: false
               };
-              _context2.next = 15;
+              _context2.next = 16;
               break;
             case 12:
               _context2.prev = 12;
               _context2.t0 = _context2["catch"](4);
-              console.error(_context2.t0);
-            case 15:
+              console.error(_context2.t0.message);
+              if (_context2.t0.res) {
+                console.error('Response data:', _context2.t0.res.data);
+              }
+            case 16:
+              _context2.prev = 16;
+              location.reload();
+              return _context2.finish(16);
+            case 19:
             case "end":
               return _context2.stop();
           }
-        }, _callee2, null, [[4, 12]]);
+        }, _callee2, null, [[4, 12, 16, 19]]);
       }))();
     }
   }
@@ -15472,13 +15495,16 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           case 3:
             res = _context.sent;
             _this.tasks = res.data;
-            _context.next = 10;
+            _context.next = 11;
             break;
           case 7:
             _context.prev = 7;
             _context.t0 = _context["catch"](0);
-            console.error(_context.t0);
-          case 10:
+            console.error(_context.t0.message);
+            if (_context.t0.response) {
+              console.error('Response data:', _context.t0.response.data);
+            }
+          case 11:
           case "end":
             return _context.stop();
         }
@@ -15497,14 +15523,17 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 is_completed: task.is_completed
               });
             case 3:
-              _context2.next = 9;
+              _context2.next = 10;
               break;
             case 5:
               _context2.prev = 5;
               _context2.t0 = _context2["catch"](0);
-              console.error(_context2.t0);
+              console.error(_context2.t0.message);
+              if (_context2.t0.res) {
+                console.error('Response data:', _context2.t0.res.data);
+              }
               task.is_completed = !task.is_completed;
-            case 9:
+            case 10:
             case "end":
               return _context2.stop();
           }
@@ -15597,10 +15626,18 @@ var _hoisted_3 = {
   "class": "mb-3"
 };
 var _hoisted_4 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
-  "for": "toolr",
+  "for": "tool",
   "class": "form-label"
 }, "Tool", -1 /* HOISTED */);
 var _hoisted_5 = ["value"];
+var _hoisted_6 = {
+  "class": "mb-3"
+};
+var _hoisted_7 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
+  "for": "employee",
+  "class": "form-label"
+}, "Employee", -1 /* HOISTED */);
+var _hoisted_8 = ["value"];
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("form", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_1, [_hoisted_2, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
     type: "text",
@@ -15622,10 +15659,22 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       key: tool.id,
       value: tool.id
     }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(tool.item), 9 /* TEXT, PROPS */, _hoisted_5);
-  }), 128 /* KEYED_FRAGMENT */))], 512 /* NEED_PATCH */), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelSelect, $data.task.tool_id]])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
+  }), 128 /* KEYED_FRAGMENT */))], 512 /* NEED_PATCH */), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelSelect, $data.task.tool_id]])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_6, [_hoisted_7, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("select", {
+    "class": "form-control",
+    id: "employee",
+    "onUpdate:modelValue": _cache[2] || (_cache[2] = function ($event) {
+      return $data.task.employee_id = $event;
+    }),
+    required: ""
+  }, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($data.employees, function (employee) {
+    return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("option", {
+      key: employee.id,
+      value: employee.id
+    }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(employee.name), 9 /* TEXT, PROPS */, _hoisted_8);
+  }), 128 /* KEYED_FRAGMENT */))], 512 /* NEED_PATCH */), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelSelect, $data.task.employee_id]])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
     type: "submit",
     "class": "btn btn-primary",
-    onClick: _cache[2] || (_cache[2] = function () {
+    onClick: _cache[3] || (_cache[3] = function () {
       return $options.addTask && $options.addTask.apply($options, arguments);
     })
   }, "Submit")]);
