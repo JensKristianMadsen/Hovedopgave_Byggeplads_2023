@@ -6,9 +6,16 @@
   </div>
 
   <div class="mb-3">
-      <label for="toolr" class="form-label">Tool</label>
+      <label for="tool" class="form-label">Tool</label>
       <select class="form-control" id="tool" v-model="task.tool_id" required>
         <option v-for="tool in tools" :key="tool.id" :value="tool.id">{{ tool.item }}</option>
+      </select>
+    </div>
+
+    <div class="mb-3">
+      <label for="employee" class="form-label">Employee</label>
+      <select class="form-control" id="employee" v-model="task.employee_id" required>
+        <option v-for="employee in employees" :key="employee.id" :value="employee.id">{{ employee.name }}</option>
       </select>
     </div>
   
@@ -29,9 +36,11 @@ data(){
     return {
         task: {
             description: '',
-            tool_id: ''
+            tool_id: '',
+            employee_id: ''
         },
-        tools: []
+        tools: [],
+        employees: []
     };
     
     },
@@ -40,6 +49,14 @@ data(){
     try {
       const res = await axios.get('http://localhost:8000/api/tools');
       this.tools = res.data;
+    } catch (error) {
+      console.error(error);
+    }
+  },
+  async mounted() {
+    try {
+      const res = await axios.get('http://localhost:8000/api/employees');
+      this.employees = res.data;
     } catch (error) {
       console.error(error);
     }
