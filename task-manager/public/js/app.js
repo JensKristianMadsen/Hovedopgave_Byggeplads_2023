@@ -15357,48 +15357,77 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
   data: function data() {
     return {
       task: {
-        description: ''
-      }
+        description: '',
+        tool_id: ''
+      },
+      tools: []
     };
+  },
+  mounted: function mounted() {
+    var _this = this;
+    return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee() {
+      var res;
+      return _regeneratorRuntime().wrap(function _callee$(_context) {
+        while (1) switch (_context.prev = _context.next) {
+          case 0:
+            _context.prev = 0;
+            _context.next = 3;
+            return axios__WEBPACK_IMPORTED_MODULE_0___default().get('http://localhost:8000/api/tools');
+          case 3:
+            res = _context.sent;
+            _this.tools = res.data;
+            _context.next = 10;
+            break;
+          case 7:
+            _context.prev = 7;
+            _context.t0 = _context["catch"](0);
+            console.error(_context.t0);
+          case 10:
+          case "end":
+            return _context.stop();
+        }
+      }, _callee, null, [[0, 7]]);
+    }))();
   },
   methods: {
     addTask: function addTask(e) {
-      var _this = this;
-      return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee() {
+      var _this2 = this;
+      return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee2() {
         var res;
-        return _regeneratorRuntime().wrap(function _callee$(_context) {
-          while (1) switch (_context.prev = _context.next) {
+        return _regeneratorRuntime().wrap(function _callee2$(_context2) {
+          while (1) switch (_context2.prev = _context2.next) {
             case 0:
               e.preventDefault();
-              if (_this.task.description) {
-                _context.next = 4;
+              if (_this2.task.description) {
+                _context2.next = 4;
                 break;
               }
               alert('Task description is required');
-              return _context.abrupt("return");
+              return _context2.abrupt("return");
             case 4:
-              _context.prev = 4;
-              _context.next = 7;
-              return axios__WEBPACK_IMPORTED_MODULE_0___default().post('http://localhost:8000/api/tasks', {
-                description: _this.task.description
-              });
+              _context2.prev = 4;
+              _context2.next = 7;
+              return axios__WEBPACK_IMPORTED_MODULE_0___default().post('http://localhost:8000/api/tasks', _this2.task);
             case 7:
-              res = _context.sent;
+              res = _context2.sent;
               if (res.status == 200) {
                 console.log('Task created:', res.data);
               }
-              _this.task.description = '';
-              _context.next = 15;
+              _this2.task = {
+                description: '',
+                tool_id: ''
+              };
+              _context2.next = 15;
               break;
             case 12:
-              _context.prev = 12;
-              _context.t0 = _context["catch"](4);
-              console.error(_context.t0);
+              _context2.prev = 12;
+              _context2.t0 = _context2["catch"](4);
+              console.error(_context2.t0);
             case 15:
             case "end":
-              return _context.stop();
+              return _context2.stop();
           }
-        }, _callee, null, [[4, 12]]);
+        }, _callee2, null, [[4, 12]]);
       }))();
     }
   }
@@ -15564,7 +15593,14 @@ var _hoisted_2 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementV
   "for": "taskDescription",
   "class": "form-label"
 }, "Task Description", -1 /* HOISTED */);
-
+var _hoisted_3 = {
+  "class": "mb-3"
+};
+var _hoisted_4 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
+  "for": "toolr",
+  "class": "form-label"
+}, "Tool", -1 /* HOISTED */);
+var _hoisted_5 = ["value"];
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("form", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_1, [_hoisted_2, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
     type: "text",
@@ -15574,10 +15610,22 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       return $data.task.description = $event;
     }),
     required: ""
-  }, null, 512 /* NEED_PATCH */), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $data.task.description]])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
+  }, null, 512 /* NEED_PATCH */), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $data.task.description]])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_3, [_hoisted_4, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("select", {
+    "class": "form-control",
+    id: "tool",
+    "onUpdate:modelValue": _cache[1] || (_cache[1] = function ($event) {
+      return $data.task.tool_id = $event;
+    }),
+    required: ""
+  }, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($data.tools, function (tool) {
+    return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("option", {
+      key: tool.id,
+      value: tool.id
+    }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(tool.item), 9 /* TEXT, PROPS */, _hoisted_5);
+  }), 128 /* KEYED_FRAGMENT */))], 512 /* NEED_PATCH */), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelSelect, $data.task.tool_id]])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
     type: "submit",
     "class": "btn btn-primary",
-    onClick: _cache[1] || (_cache[1] = function () {
+    onClick: _cache[2] || (_cache[2] = function () {
       return $options.addTask && $options.addTask.apply($options, arguments);
     })
   }, "Submit")]);
