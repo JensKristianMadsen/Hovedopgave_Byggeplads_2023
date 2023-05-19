@@ -43,8 +43,12 @@
           const res = await axios.get('http://localhost:8000/api/tasks');
           this.tasks = res.data;
         } catch (error) {
-          console.error(error);
-        }
+                console.error(error.message);
+                if (error.response) {
+        console.error('Response data:', error.response.data);
+    
+      }
+              }
       },
       methods: {
         async taskCompletionCheck(task) {
@@ -53,7 +57,11 @@
               is_completed: task.is_completed
             });
           } catch (error) {
-            console.error(error);
+            console.error(error.message);
+            if (error.res) {
+        console.error('Response data:', error.res.data);
+    
+      }
             task.is_completed = !task.is_completed;
           }
         },

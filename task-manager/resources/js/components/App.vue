@@ -27,8 +27,12 @@ export default {
           const res = await axios.get('http://localhost:8000/api/tasks');
           this.tasks = res.data;
         } catch (error) {
-          console.error(error);
-        }
+                console.error(error.message);
+                if (error.res) {
+        console.error('Response data:', error.res.data);
+    
+      }
+              }
       },
 };
 </script>
