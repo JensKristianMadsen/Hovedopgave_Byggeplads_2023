@@ -15365,42 +15365,57 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         employee_id: '',
         is_completed: false
       },
+      tasks: [],
       tools: [],
       employees: []
     };
   },
+  computed: {
+    availableTools: function availableTools() {
+      var usedToolIds = this.tasks.filter(function (t) {
+        return !t.is_completed;
+      }).map(function (t) {
+        return t.tool_id;
+      });
+      return this.tools.filter(function (tool) {
+        return !usedToolIds.includes(tool.id);
+      });
+    }
+  },
   mounted: function mounted() {
     var _this = this;
     return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee() {
-      var resTools, resEmployees;
+      var resTasks, resTools, resEmployees;
       return _regeneratorRuntime().wrap(function _callee$(_context) {
         while (1) switch (_context.prev = _context.next) {
           case 0:
             _context.prev = 0;
             _context.next = 3;
-            return axios__WEBPACK_IMPORTED_MODULE_0___default().get('http://localhost:8000/api/tools');
+            return axios__WEBPACK_IMPORTED_MODULE_0___default().get('http://localhost:8000/api/tasks');
           case 3:
-            resTools = _context.sent;
+            resTasks = _context.sent;
             _context.next = 6;
-            return axios__WEBPACK_IMPORTED_MODULE_0___default().get('http://localhost:8000/api/employees');
+            return axios__WEBPACK_IMPORTED_MODULE_0___default().get('http://localhost:8000/api/tools');
           case 6:
+            resTools = _context.sent;
+            _context.next = 9;
+            return axios__WEBPACK_IMPORTED_MODULE_0___default().get('http://localhost:8000/api/employees');
+          case 9:
             resEmployees = _context.sent;
+            _this.tasks = resTasks.data;
             _this.tools = resTools.data;
             _this.employees = resEmployees.data;
-            _context.next = 15;
+            _context.next = 18;
             break;
-          case 11:
-            _context.prev = 11;
+          case 15:
+            _context.prev = 15;
             _context.t0 = _context["catch"](0);
             console.error(_context.t0.message);
-            if (_context.t0.res) {
-              console.error('Response data:', _context.t0.res.data);
-            }
-          case 15:
+          case 18:
           case "end":
             return _context.stop();
         }
-      }, _callee, null, [[0, 11]]);
+      }, _callee, null, [[0, 15]]);
     }))();
   },
   methods: {
@@ -15433,24 +15448,21 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 employee: '',
                 is_completed: false
               };
-              _context2.next = 16;
+              _context2.next = 15;
               break;
             case 12:
               _context2.prev = 12;
               _context2.t0 = _context2["catch"](4);
               console.error(_context2.t0.message);
-              if (_context2.t0.res) {
-                console.error('Response data:', _context2.t0.res.data);
-              }
-            case 16:
-              _context2.prev = 16;
+            case 15:
+              _context2.prev = 15;
               location.reload();
-              return _context2.finish(16);
-            case 19:
+              return _context2.finish(15);
+            case 18:
             case "end":
               return _context2.stop();
           }
-        }, _callee2, null, [[4, 12, 16, 19]]);
+        }, _callee2, null, [[4, 12, 15, 18]]);
       }))();
     }
   }
@@ -15518,12 +15530,13 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 isEditing: false
               });
             });
-            _context.next = 15;
+            _context.next = 16;
             break;
           case 13:
             _context.prev = 13;
             _context.t0 = _context["catch"](0);
-          case 15:
+            console.error(_context.t0.message);
+          case 16:
           case "end":
             return _context.stop();
         }
@@ -15531,6 +15544,18 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     }))();
   },
   methods: {
+    getEmployeeName: function getEmployeeName(id) {
+      var employee = this.employees.find(function (employee) {
+        return employee.id === id;
+      });
+      return employee ? employee.name : 'Unknown';
+    },
+    getToolItem: function getToolItem(id) {
+      var tool = this.tools.find(function (tool) {
+        return tool.id === id;
+      });
+      return tool ? tool.item : 'Unknown';
+    },
     taskCompletionCheck: function taskCompletionCheck(task) {
       return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee2() {
         return _regeneratorRuntime().wrap(function _callee2$(_context2) {
@@ -15542,17 +15567,14 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 is_completed: task.is_completed
               });
             case 3:
-              _context2.next = 10;
+              _context2.next = 9;
               break;
             case 5:
               _context2.prev = 5;
               _context2.t0 = _context2["catch"](0);
               console.error(_context2.t0.message);
-              if (_context2.t0.res) {
-                console.error('Response data:', _context2.t0.res.data);
-              }
               task.is_completed = !task.is_completed;
-            case 10:
+            case 9:
             case "end":
               return _context2.stop();
           }
@@ -15567,18 +15589,20 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
               _context3.prev = 0;
               _context3.next = 3;
               return axios__WEBPACK_IMPORTED_MODULE_0___default().put("http://localhost:8000/api/tasks/".concat(task.id), {
+                description: task.description,
                 tool_id: task.tool_id,
                 employee_id: task.employee_id
               });
             case 3:
-              _context3.next = 7;
+              _context3.next = 8;
               break;
             case 5:
               _context3.prev = 5;
               _context3.t0 = _context3["catch"](0);
-            case 7:
-              task.isEditing = false;
+              console.error(_context3.t0.message);
             case 8:
+              task.isEditing = false;
+            case 9:
             case "end":
               return _context3.stop();
           }
@@ -15613,7 +15637,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
             case 9:
               _context4.prev = 9;
               _context4.t0 = _context4["catch"](2);
-              console.error("error from delete task.id", _context4.t0);
+              console.error(_context4.t0.message);
             case 12:
             case "end":
               return _context4.stop();
@@ -15699,7 +15723,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       return $data.task.tool_id = $event;
     }),
     required: ""
-  }, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($data.tools, function (tool) {
+  }, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($options.availableTools, function (tool) {
     return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("option", {
       key: tool.id,
       value: tool.id
@@ -15756,21 +15780,28 @@ var _hoisted_3 = ["onUpdate:modelValue", "onChange"];
 var _hoisted_4 = {
   key: 0
 };
-var _hoisted_5 = ["onUpdate:modelValue", "onChange"];
-var _hoisted_6 = ["value"];
-var _hoisted_7 = {
+var _hoisted_5 = ["onUpdate:modelValue"];
+var _hoisted_6 = {
   key: 1
 };
-var _hoisted_8 = {
+var _hoisted_7 = {
   key: 2
 };
-var _hoisted_9 = ["onUpdate:modelValue", "onChange"];
-var _hoisted_10 = ["value"];
-var _hoisted_11 = {
+var _hoisted_8 = ["onUpdate:modelValue", "onChange"];
+var _hoisted_9 = ["value"];
+var _hoisted_10 = {
   key: 3
 };
-var _hoisted_12 = ["onClick"];
-var _hoisted_13 = ["onClick"];
+var _hoisted_11 = {
+  key: 4
+};
+var _hoisted_12 = ["onUpdate:modelValue", "onChange"];
+var _hoisted_13 = ["value"];
+var _hoisted_14 = {
+  key: 5
+};
+var _hoisted_15 = ["onClick"];
+var _hoisted_16 = ["onClick"];
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("table", _hoisted_1, [_hoisted_2, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("tbody", null, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($data.tasks, function (task) {
     return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("tr", {
@@ -15786,7 +15817,12 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       onChange: function onChange($event) {
         return $options.taskCompletionCheck(task);
       }
-    }, null, 40 /* PROPS, HYDRATE_EVENTS */, _hoisted_3), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelCheckbox, task.is_completed]])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(task.description), 1 /* TEXT */), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(task.tool_id), 1 /* TEXT */), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(task.employee_id), 1 /* TEXT */), task.isEditing ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("td", _hoisted_4, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("select", {
+    }, null, 40 /* PROPS, HYDRATE_EVENTS */, _hoisted_3), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelCheckbox, task.is_completed]])]), task.isEditing ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("td", _hoisted_4, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+      type: "text",
+      "onUpdate:modelValue": function onUpdateModelValue($event) {
+        return task.description = $event;
+      }
+    }, null, 8 /* PROPS */, _hoisted_5), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, task.description]])])) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("td", _hoisted_6, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(task.description), 1 /* TEXT */)), task.isEditing ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("td", _hoisted_7, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("select", {
       "onUpdate:modelValue": function onUpdateModelValue($event) {
         return task.tool_id = $event;
       },
@@ -15797,8 +15833,8 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("option", {
         key: tool.id,
         value: tool.id
-      }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(tool.item), 9 /* TEXT, PROPS */, _hoisted_6);
-    }), 128 /* KEYED_FRAGMENT */))], 40 /* PROPS, HYDRATE_EVENTS */, _hoisted_5), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelSelect, task.tool_id]])])) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("td", _hoisted_7, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(task.tool_id), 1 /* TEXT */)), task.isEditing ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("td", _hoisted_8, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("select", {
+      }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(tool.item), 9 /* TEXT, PROPS */, _hoisted_9);
+    }), 128 /* KEYED_FRAGMENT */))], 40 /* PROPS, HYDRATE_EVENTS */, _hoisted_8), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelSelect, task.tool_id]])])) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("td", _hoisted_10, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($options.getToolItem(task.tool_id)), 1 /* TEXT */)), task.isEditing ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("td", _hoisted_11, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("select", {
       "onUpdate:modelValue": function onUpdateModelValue($event) {
         return task.employee_id = $event;
       },
@@ -15809,16 +15845,16 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("option", {
         key: employee.id,
         value: employee.id
-      }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(employee.name), 9 /* TEXT, PROPS */, _hoisted_10);
-    }), 128 /* KEYED_FRAGMENT */))], 40 /* PROPS, HYDRATE_EVENTS */, _hoisted_9), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelSelect, task.employee_id]])])) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("td", _hoisted_11, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(task.employee_id), 1 /* TEXT */)), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
+      }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(employee.name), 9 /* TEXT, PROPS */, _hoisted_13);
+    }), 128 /* KEYED_FRAGMENT */))], 40 /* PROPS, HYDRATE_EVENTS */, _hoisted_12), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelSelect, task.employee_id]])])) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("td", _hoisted_14, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($options.getEmployeeName(task.employee_id)), 1 /* TEXT */)), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
       onClick: function onClick($event) {
-        return task.isEditing = !task.isEditing;
+        return task.isEditing ? $options.updateTask(task) : task.isEditing = !task.isEditing;
       }
-    }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(task.isEditing ? 'Save' : 'Edit'), 9 /* TEXT, PROPS */, _hoisted_12)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
+    }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(task.isEditing ? 'Save' : 'Edit'), 9 /* TEXT, PROPS */, _hoisted_15)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
       onClick: function onClick($event) {
         return $options.deleteTask(task);
       }
-    }, "Delete", 8 /* PROPS */, _hoisted_13)])], 2 /* CLASS */);
+    }, "Delete", 8 /* PROPS */, _hoisted_16)])], 2 /* CLASS */);
   }), 128 /* KEYED_FRAGMENT */))])]);
 }
 
@@ -15884,7 +15920,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n.completed {\n      text-decoration: line-through;\n      color: gray;\n}\n    ", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n.completed {\n    text-decoration: line-through;\n    color: gray;\n}\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
