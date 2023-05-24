@@ -9,8 +9,10 @@
       </tr>
     </thead>
     <tbody>
-      <tr v-for="task in tasksNotCompleted" :key="task.id" :class="{ 'completed': task.is_completed }">
-        <td><input type="checkbox" v-model="task.is_completed" @change="taskCompletionCheck(task)" /> </td>
+      <tr v-for="task in tasksIsCompleted" :key="task.id" :class="{ 'completed': task.is_completed }">
+        <td><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check-lg" viewBox="0 0 16 16">
+  <path d="M12.736 3.97a.733.733 0 0 1 1.047 0c.286.289.29.756.01 1.05L7.88 12.01a.733.733 0 0 1-1.065.02L3.217 8.384a.757.757 0 0 1 0-1.06.733.733 0 0 1 1.047 0l3.052 3.093 5.4-6.425a.247.247 0 0 1 .02-.022Z"/>
+</svg></td>
 
         <td v-if="task.isEditing">
           <input type="text" v-model="task.description" />
@@ -50,8 +52,8 @@
       };
     },
     computed:{
-      tasksNotCompleted() {
-      return this.tasks.filter(task => !task.is_completed);
+      tasksIsCompleted() {
+      return this.tasks.filter(task => task.is_completed);
     }
     },
     async mounted() {
@@ -81,9 +83,6 @@
     return tool ? tool.item : 'Unknown';
   },
       async taskCompletionCheck(task) {
-        if (!confirm(`Confirm to completion task ${task.description}?`)) {
-          return;
-        }
         try {
           await axios.patch(`http://localhost:8000/api/tasks/${task.id}`, {
             is_completed: task.is_completed
@@ -91,8 +90,6 @@
         } catch (error) {
           console.error(error.message);
           task.is_completed = !task.is_completed;
-        }  finally {
-          location.reload();
         }
       },
       async updateTask(task) {

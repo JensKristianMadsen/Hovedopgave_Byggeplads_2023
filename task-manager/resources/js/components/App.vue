@@ -5,15 +5,19 @@
     <div>
   <TaskList />
     </div>
+    <div>
+<TaskCompletedList />
+    </div>
 </template>
 
 <script>
+import TaskCompletedList from './TaskCompletedList.vue';
 import TaskList from './TaskList.vue';
 import Task from './Task.vue';
-import axios from 'axios';
 export default {
     name: 'App',
     components: {
+        TaskCompletedList,
         TaskList,
         Task
     },
@@ -22,18 +26,7 @@ export default {
           tasks: []
         };
       },
-      async mounted() {
-        try {
-          const res = await axios.get('http://localhost:8000/api/tasks');
-          this.tasks = res.data;
-        } catch (error) {
-                console.error(error.message);
-                if (error.res) {
-        console.error('Response data:', error.res.data);
     
-      }
-              }
-      },
 };
 </script>
 
