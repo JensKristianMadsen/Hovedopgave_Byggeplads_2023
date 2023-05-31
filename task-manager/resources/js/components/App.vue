@@ -17,8 +17,10 @@
 
 <!--TaskList-->
 <TaskList />
-<!--askCompletedList -->
+<!--TaskList-->
+<!--TaskCompletedList -->
 <TaskCompletedList />
+<!--TaskCompletedList -->
 
 
 </div>
