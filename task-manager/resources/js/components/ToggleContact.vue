@@ -1,0 +1,97 @@
+<template>
+
+
+<div class="sticky">
+    <input type="checkbox" id="drawer-toggle" class="relative sr-only peer" >
+    <label for="drawer-toggle" class="absolute inline-flex text-center justify-center top-0 left-0 py-0 px-1 p-1 transition-all duration-500  hover:bg-indigo-700 text-sm font-medium text-white shadow-sm bg-indigo-600 rounded-lg peer-checked peer-checked:left-64">
+    <p>Need Help ?</p> 
+
+    
+    </label>
+    <div class="fixed top-0 left-0 z-20 w-64 h-full transition-all duration-500 transform -translate-x-full bg-white shadow-lg peer-checked:translate-x-0">
+      <div class="px-0.5 py-9">
+       
+
+<!--pofile_job_responsibilities_employee-->
+<div class="pofile_job_responsibilities_employee" >
+    <div
+      id="view"
+      class="h-full w-screen flex flex-row"
+      x-data="{ sidenav: flas }"
+    >
+     
+      <div
+        id="sidebar"
+        class="bg-white h-screen md:block shadow-xl px-3 w-30 md:w-60 lg:w-60 overflow-x-hidden transition-transform duration-300 ease-in-out"
+
+      >
+        <div class="space-y-6 md:space-y-10 mt-10">
+          <h1 class="font-bold text-4xl text-center md:hidden">
+            D<span class="text-teal-600">.</span>
+          </h1>
+          <h1 class="hidden md:block font-bold text-sm md:text-xl text-center">
+            Contact<span class="text-teal-600">.</span>
+          </h1>
+          <div id="profile" class="space-y-3">
+            <img
+              src="avatar.jpg"
+              alt="Avatar user"
+              class="w-10 md:w-16 rounded-full mx-auto"
+            />
+            <div>
+              <h2
+                class="font-medium text-xs md:text-sm text-center text-teal-500"
+              >
+                Mikkel Christiansen
+              </h2>
+              <p class="text-s text-gray-500 text-center">Task-Manager</p>
+              <p class="text-s text-gray-500 text-center">Tlf. (+45) 27 64 89 86</p>
+            </div>
+          </div>
+          <div id="profile" class="space-y-3">
+            <img
+              src="jens.jpg"
+              alt="Avatar user"
+              class="w-10 md:w-16 rounded-full mx-auto"
+            />
+            <div>
+              <h2
+                class="font-medium text-xs md:text-sm text-center text-teal-500"
+              >
+                Jens Madsen
+              </h2>
+              <p class="text-s text-gray-500 text-center">Container-Manager</p>
+              <p class="text-s text-gray-500 text-center">Tlf. (+45) 32 56 78 72</p>
+            </div>
+          </div>
+          
+        </div>
+      </div>
+    </div>
+</div>
+<!--pofile_job_responsibilities_employee-->
+
+        <p class="text-gray-500">phone number</p>
+      </div>
+    </div>
+  </div>
+
+
+
+</template>
+
+<script>
+export default {
+
+}
+</script>
+<style>
+.w-screen {
+    width: auto;
+}
+
+.md\:w-16 {
+    width: 6rem;
+}
+
+</style>
