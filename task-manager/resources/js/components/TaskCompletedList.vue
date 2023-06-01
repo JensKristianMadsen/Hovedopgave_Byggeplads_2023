@@ -50,10 +50,10 @@
           </svg>
           <span class="text-sm hidden md:block">Latest</span>
         </a>
-        <!--All remove completed Task-->
+        <!--Delete all completed Task-->
         <a
             href="#"
-            @click="removeAllCompletedTask" 
+            @click="deleteAllCompletedTask" 
             class="p-2 border border-slate-200 rounded-md inline-flex space-x-1 items-center hover:bg-slate-200"
           >
             <svg
@@ -241,7 +241,10 @@
         }
       },
  
-    async removeAllCompletedTask() {
+    async deleteAllCompletedTask() {
+      if (!confirm(`Confirm to Delete All completed Task!`)) {
+          return;
+        }
         const completedTasks = this.tasks.filter(task => task.is_completed);
         const deleteRequests = completedTasks.map(task =>
             axios.delete(`http://localhost:8000/api/tasks/${task.id}`)
