@@ -3,8 +3,13 @@
 
 <div class="sticky">
     <input type="checkbox" id="drawer-toggle" class="relative sr-only peer" >
-    <label for="drawer-toggle" class="absolute inline-flex text-center justify-center top-0 left-0 py-0 px-1 p-1 transition-all duration-500  hover:bg-indigo-700 text-sm font-medium text-white shadow-sm bg-indigo-600 rounded-lg peer-checked peer-checked:left-64">
-    <p>Need Help ?</p> 
+    <label for="drawer-toggle" class="absolute inline-flex text-center justify-center top-0 left-0 py-0 px-1 p-1 transition-all duration-500  hover:bg-blue-400 text-sm font-medium text-white shadow-sm bg-blue-600 rounded-lg peer-checked peer-checked:left-64">
+      <h3 class="text text-slate-100 text-center">Need Help</h3>
+    
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+  <path stroke-linecap="round" stroke-linejoin="round" d="M15.042 21.672L13.684 16.6m0 0l-2.51 2.225.569-9.47 5.227 7.917-3.286-.672zM12 2.25V4.5m5.834.166l-1.591 1.591M20.25 10.5H18M7.757 14.743l-1.59 1.59M6 10.5H3.75m4.007-4.243l-1.59-1.59" />
+</svg>
+
 
     
     </label>
@@ -40,7 +45,7 @@
             />
             <div>
               <h2
-                class="font-medium text-xs md:text-sm text-center text-teal-500"
+                class="font-medium text-s md:text-sm text-center text-teal-500"
               >
                 Mikkel Christiansen
               </h2>
@@ -56,7 +61,7 @@
             />
             <div>
               <h2
-                class="font-medium text-xs md:text-sm text-center text-teal-500"
+                class="font-medium text-s md:text-sm text-center text-teal-500"
               >
                 Jens Madsen
               </h2>
