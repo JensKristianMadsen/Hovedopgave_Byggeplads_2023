@@ -1,4 +1,5 @@
 <template>
+  
 <!--ToggleContact-->
 
   <ToggleContact />
@@ -39,11 +40,7 @@ export default {
         TaskList,
         Task
     },
-      data() {
-        return {
-          tasks: []
-        };
-      },
+      
     
 };
 </script>

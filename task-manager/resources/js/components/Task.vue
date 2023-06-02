@@ -1,7 +1,7 @@
 
 <template>
 
-  <div class="mt-10 sm:mt-0">
+  <div class="mt-10 sm:mt-0 ">
     <div class="md:grid md:grid-cols-4 md:gap-6">
       <div class="md:col-span-1">
         <div class="px-4 sm:px-0">
@@ -17,7 +17,7 @@
           
                 <div class="col-span-1 sm:col-span-1 lg:col-span-1">
                   <label for="taskDescription" class="block text-sm font-medium text-gray-700">Task Description</label>
-                  <textarea maxlength="20"  type="text" v-model="task.description" name="taskDescription" id="taskDescription" autocomplete="address-level2" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" role="alert" required></textarea>
+                  <textarea  type="text" v-model="task.description" name="taskDescription" id="taskDescription" autocomplete="address-level2" maxlength="60"  class="mt-1 block w-full rounded-md  border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" role="alert" required></textarea>
                 </div>
 
                 
