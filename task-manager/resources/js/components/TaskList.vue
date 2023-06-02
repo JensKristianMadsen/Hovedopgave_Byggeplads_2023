@@ -12,7 +12,7 @@
         <a
           href="#"
           @click="latest"
-          class="p-2 border border-slate-200 rounded-md inline-flex space-x-1 items-center hover:bg-slate-200"
+          class="p-2 border border-slate-200 rounded-md inline-flex space-x-1 items-center hover:bg-slate-200 "
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -49,17 +49,19 @@
       <tr v-for="task in tasksNotCompleted" :key="task.id" :class="{ 'completed': task.is_completed }">
         <td><input type="checkbox" v-model="task.is_completed" @change="taskCompletionCheck(task)" /> </td>
 
-        <td v-if="task.isEditing">
-          <input type="text" v-model="task.description" />
-        </td>
-        <td v-else>{{ task.description }}</td>
+        <td>T({{ task.id }}): </td>
 
-        <td v-if="task.isEditing">
-          <select v-model="task.tool_id" @change="updateTask(task)">
-            <option v-for="tool in tools" :key="tool.id" :value="tool.id">{{ tool.item }}</option>
-          </select>
-        </td>
-        <td v-else>{{ getToolItem(task.tool_id) }}</td>
+<td v-if="task.isEditing">
+  <input type="text" v-model="task.description" />
+</td>
+<td v-else>{{ task.description }}, </td>
+
+<td v-if="task.isEditing">
+  <select v-model="task.tool_id" @change="updateTask(task)">
+    <option v-for="tool in tools" :key="tool.id" :value="tool.id">{{ tool.item }}</option>
+  </select>
+</td>
+<td v-else>{{ getToolItem(task.tool_id) }}, </td>
         
         <td v-if="task.isEditing">
           <select v-model="task.employee_id" @change="updateTask(task)">
@@ -206,4 +208,7 @@
     text-decoration: line-through;
     color: gray;
   }
+  .max-w-lg {
+    max-width: max-content;
+}
 </style>
