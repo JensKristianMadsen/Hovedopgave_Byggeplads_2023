@@ -14,18 +14,7 @@ class ToolController extends Controller
      */
     public function index()
     {
-
         return Tool::all();
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
     }
 
     /**
@@ -38,6 +27,7 @@ class ToolController extends Controller
     {
         try {
             $validated = $request->validate([
+
                 'item' => 'required',
                 'is_available' => 'required|boolean',
 
@@ -46,9 +36,8 @@ class ToolController extends Controller
 
             return response()->json($tool, 201);
         } catch (\Illuminate\Validation\ValidationException $exception) {
-            return response()->json([
-                'errors' => $exception->errors()
-            ], 422);
+
+            return response()->json(['errors' => $exception->errors()], 422);
         }
     }
 
@@ -64,17 +53,6 @@ class ToolController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -85,18 +63,17 @@ class ToolController extends Controller
     {
         try {
             $validated = $request->validate([
+
                 'item' => 'required',
                 'is_available' => 'required|boolean',
-
             ]);
 
             $tool->update($validated);
 
             return response()->json($tool, 200);
         } catch (\Illuminate\Validation\ValidationException $exception) {
-            return response()->json([
-                'errors' => $exception->errors()
-            ], 422);
+
+            return response()->json(['errors' => $exception->errors()], 422);
         }
     }
 
@@ -109,6 +86,7 @@ class ToolController extends Controller
     public function destroy(Tool $tool)
     {
         $tool->delete();
+
         return response()->json(null, 204);
     }
 }
