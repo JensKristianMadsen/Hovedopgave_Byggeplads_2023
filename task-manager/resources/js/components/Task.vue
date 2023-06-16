@@ -66,7 +66,9 @@
   export default {
 
     data() {
+
       return {
+
         task: {
           description: '',
           tool_id: '',
@@ -93,6 +95,7 @@
     },
 
     async mounted() {
+      
       try {
 
         const resTasks = await axios.get('http://localhost:8000/api/tasks');
@@ -116,9 +119,7 @@
         e.preventDefault();
 
         if (!this.task.description || !this.task.tool_id || !this.task.employee_id) {
-
           alert('Task description, tool, and employee are required fill out');
-
           return;
         }
 
@@ -127,12 +128,11 @@
           const res = await axios.post('http://localhost:8000/api/tasks', this.task);
 
           if (res.status == 200) {
-
             console.log('Task created:', res.data);
           }
 
           this.task = {
-
+            
             description: '',
             tool: '',
             employee: '',

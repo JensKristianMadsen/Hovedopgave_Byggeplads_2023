@@ -9,6 +9,7 @@
         </div>
         <div class="inline-flex space-x-2 items-center">
           <a
+            href="http://localhost:8000/"
             class="p-2 border border-slate-200 rounded-md inline-flex space-x-1 items-center hover:bg-slate-200"
           >
 
@@ -106,6 +107,8 @@
               Nice job! You've bought all your todolist
             </p>
 
+             <!--Completed task List-->
+
             <div>
               <tbody>
                 <tr
@@ -127,9 +130,13 @@
                   <td>{{ getEmployeeName(task.employee_id) }}</td>
 
                   <td>
+
+                    <!--Delete one task-->
+
                     <button>
                       <div class="btn-danger ml-3" @click="deleteTask(task)">
-                        <!--Delete Icone-->
+
+                        <!--Trash svg -->
                         <svg
                           xmlns="http://www.w3.org/2000/svg"
                           fill="none"
@@ -160,51 +167,70 @@
 
 
 <script>
-  import axios from 'axios';
-  export default {
+
+import axios from 'axios';
+
+export default {
+
     data() {
+
       return {
+
         tasks: [],
         tools: [],
         employees: []
       };
     },
+
     computed:{
+
       tasksIsCompleted() {
       return this.tasks.filter(task => task.is_completed);
-    }
+      }
     },
+
     async mounted() {
+
       try {
+
         const [taskRes, toolRes, employeeRes] = await Promise.all([
+
           axios.get('http://localhost:8000/api/tasks'),
           axios.get('http://localhost:8000/api/tools'),
           axios.get('http://localhost:8000/api/employees')
         ]);
+
         this.tools = toolRes.data;
         this.employees = employeeRes.data;
-        this.tasks = taskRes.data.map(task => ({ ...task,
-          isEditing: false
-        }));
+        this.tasks = taskRes.data.map(task => ({ ...task, isEditing: false}));
+
       } catch (error) {
         console.error(error.message);
       }
     },
+
     methods: {
 
       getEmployeeName(id) {
-    const employee = this.employees.find(employee => employee.id === id);
-    return employee ? employee.name : 'Unknown';
-  },
-  getToolItem(id) {
-    const tool = this.tools.find(tool => tool.id === id);
-    return tool ? tool.item : 'Unknown';
-  },
+  
+      const employee = this.employees.find(employee => employee.id === id);
+      return employee ? employee.name : 'Unknown';
+      },
+
+      getToolItem(id) {
+
+      const tool = this.tools.find(tool => tool.id === id);
+      return tool ? tool.item : 'Unknown';
+      },
+
       async taskCompletionCheck(task) {
+
         try {
+
           await axios.patch(`http://localhost:8000/api/tasks/${task.id}`, {
             is_completed: task.is_completed
           });
+
         } catch (error) {
           console.error(error.message);
           task.is_completed = !task.is_completed;
@@ -212,39 +238,48 @@
       },
      
       async deleteTask(task) {
+
         if (!confirm(`Confirm to delete task ${task.description}?`)) {
           return;
         }
+
         try {
+
           await axios.delete(`http://localhost:8000/api/tasks/${task.id}`)
           const taskIndex = this.tasks.indexOf(task);
+
           if (taskIndex > -1) {
             this.tasks = this.tasks.filter(t => t.id !== task.id);
           }
+
         } catch (error) {
           console.error(error.message);
         }
       },
  
     async deleteAllCompletedTask() {
+
       if (!confirm(`Confirm to Delete All completed Task!`)) {
           return;
         }
+
         const completedTasks = this.tasks.filter(task => task.is_completed);
+
         const deleteRequests = completedTasks.map(task =>
             axios.delete(`http://localhost:8000/api/tasks/${task.id}`)
         );
         
         try {
+
             await Promise.all(deleteRequests);
             this.tasks = this.tasks.filter(task => !task.is_completed);
+
         } catch (error) {
             console.error(error.message);
         }
     }
-    // ...
+  }
 }
-    }
   
 </script>
     
