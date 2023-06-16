@@ -18,16 +18,6 @@ class TaskController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -38,6 +28,7 @@ class TaskController extends Controller
 
         try {
             $validated = $request->validate([
+
                 'description' => 'required',
                 'tool_id' => 'required|exists:tools,id',
                 'employee_id' => 'required|exists:employees,id',
@@ -49,9 +40,8 @@ class TaskController extends Controller
 
             return response()->json($task, 201);
         } catch (\Illuminate\Validation\ValidationException $exception) {
-            return response()->json([
-                'errors' => $exception->errors()
-            ], 422);
+
+            return response()->json(['errors' => $exception->errors()], 422);
         }
     }
 
@@ -67,17 +57,6 @@ class TaskController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -88,6 +67,7 @@ class TaskController extends Controller
     {
         try {
             $validated = $request->validate([
+
                 'description' => 'sometimes|required',
                 'tool_id' => 'sometimes|required|exists:tools,id',
                 'employee_id' => 'sometimes|required|exists:employees,id',
@@ -98,9 +78,8 @@ class TaskController extends Controller
 
             return response()->json($task, 200);
         } catch (\Illuminate\Validation\ValidationException $exception) {
-            return response()->json([
-                'errors' => $exception->errors()
-            ], 422);
+
+            return response()->json(['errors' => $exception->errors()], 422);
         }
     }
 
@@ -113,6 +92,7 @@ class TaskController extends Controller
     public function destroy(Task $task)
     {
         $task->delete();
+
         return response()->json(null, 204);
     }
 }
