@@ -9,7 +9,7 @@
         </div>
         <div class="inline-flex space-x-2 items-center">
           <a
-            href="http://localhost:8000/"
+            href="#"
             class="p-2 border border-slate-200 rounded-md inline-flex space-x-1 items-center hover:bg-slate-200"
           >
 
